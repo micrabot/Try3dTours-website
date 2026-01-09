@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered 3D tour analysis reveals what actually converts buyers. Paste any Matterport or Zillow 3D Home link for instant engagement insights.">
+    <title>Try3DTours - AI Analysis That Proves ROI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Archivo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="brand">
+                    <span class="brand-accent">//</span> Try3DTours
+                </div>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links" id="navLinks">
+                    <a href="#analyze" class="nav-link">Analyze</a>
+                    <a href="#proof" class="nav-link">Proof</a>
+                    <a href="#examples" class="nav-link">Examples</a>
+                    <a href="#intelligence" class="nav-link">Intelligence</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-label">AI-Powered Tour Intelligence</div>
+                    <h1 class="hero-title">
+                        Stop Guessing.<br>
+                        <span class="title-accent">Know What Converts.</span>
+                    </h1>
+                    <p class="hero-description">
+                        Paste any Matterport or Zillow 3D tour link. Our AI analyzes engagement patterns, 
+                        identifies selling points, and generates marketing that matches what buyers actually want.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">480M+</div>
+                            <div class="stat-label">Tour Engagements Analyzed</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">668</div>
+                            <div class="stat-label">Properties Documented</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">450K</div>
+                            <div class="stat-label">Sq Ft Max Facility Size</div>
+                        </div>
+                    </div>
+                    <a href="#analyze" class="cta-primary">Analyze Your Tour Free →</a>
+                </div>
+                <div class="hero-visual">
+                    <div class="data-viz">
+                        <div class="viz-header">Live Engagement Heatmap</div>
+                        <div class="heatmap">
+                            <div class="heatmap-row">
+                                <div class="heat-cell high" data-value="87%"></div>
+                                <div class="heat-cell medium" data-value="54%"></div>
+                                <div class="heat-cell low" data-value="23%"></div>
+                                <div class="heat-cell medium" data-value="61%"></div>
+                            </div>
+                            <div class="heatmap-row">
+                                <div class="heat-cell medium" data-value="45%"></div>
+                                <div class="heat-cell high" data-value="92%"></div>
+                                <div class="heat-cell high" data-value="78%"></div>
+                                <div class="heat-cell medium" data-value="56%"></div>
+                            </div>
+                            <div class="heatmap-row">
+                                <div class="heat-cell low" data-value="34%"></div>
+                                <div class="heat-cell medium" data-value="67%"></div>
+                                <div class="heat-cell low" data-value="29%"></div>
+                                <div class="heat-cell high" data-value="81%"></div>
+                            </div>
+                        </div>
+                        <div class="viz-labels">
+                            <span>Kitchen</span>
+                            <span>Master BR</span>
+                            <span>Living</span>
+                            <span>Outdoor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bg-grid"></div>
+    </section>
+
+    <!-- Analysis Tool Section -->
+    <section class="analyze-section" id="analyze">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Instant AI Analysis</h2>
+                <p class="section-subtitle">Paste your 3D tour link. Get actionable intelligence in seconds.</p>
+            </div>
+            
+            <div class="analyzer-card">
+                <div class="analyzer-input-group">
+                    <input 
+                        type="text" 
+                        id="tourUrl" 
+                        class="analyzer-input" 
+                        placeholder="https://my.matterport.com/show/?m=..."
+                        aria-label="Paste 3D tour URL"
+                    >
+                    <button class="analyze-btn" onclick="analyzeTour()">
+                        <span class="btn-text">Analyze Tour</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+                <div class="supported-platforms">
+                    <span class="platform-label">Supported:</span>
+                    <span class="platform">Matterport</span>
+                    <span class="platform">Zillow 3D Home</span>
+                    <span class="platform">iGUIDE</span>
+                </div>
+                
+                <!-- Analysis Results (Hidden by default) -->
+                <div class="analysis-results" id="analysisResults" style="display: none;">
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-icon">📊</div>
+                            <div class="result-title">Engagement Score</div>
+                            <div class="result-value" id="engagementScore">--</div>
+                            <div class="result-insight" id="engagementInsight"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-icon">🎯</div>
+                            <div class="result-title">Top Converting Space</div>
+                            <div class="result-value" id="topSpace">--</div>
+                            <div class="result-insight" id="spaceInsight"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-icon">⏱️</div>
+                            <div class="result-title">Avg. Tour Duration</div>
+                            <div class="result-value" id="avgDuration">--</div>
+                            <div class="result-insight" id="durationInsight"></div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-icon">💡</div>
+                            <div class="result-title">Marketing Angle</div>
+                            <div class="result-value" id="marketingAngle">--</div>
+                            <div class="result-insight" id="angleInsight"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-generated-content">
+                        <h3 class="content-title">AI-Generated Marketing Copy</h3>
+                        <div class="generated-text" id="generatedCopy">
+                            <div class="loading-shimmer"></div>
+                        </div>
+                        <button class="copy-btn" onclick="copyContent()">Copy to Clipboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Section -->
+    <section class="proof-section" id="proof">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">The Data Doesn't Lie</h2>
+                <p class="section-subtitle">Real numbers from real properties in Western NY</p>
+            </div>
+            
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <div class="proof-number">3.2x</div>
+                    <div class="proof-label">Higher Engagement vs Photos Alone</div>
+                    <div class="proof-detail">Average session time: 4m 37s with 3D tours vs 1m 26s with photos</div>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="proof-number">68%</div>
+                    <div class="proof-label">Reduction in Unqualified Showings</div>
+                    <div class="proof-detail">Buyers self-qualify by spending time in spaces that matter to them</div>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="proof-number">11 Days</div>
+                    <div class="proof-label">Faster to Accepted Offer</div>
+                    <div class="proof-detail">Listings with 3D tours vs comparable properties without</div>
+                </div>
+                
+                <div class="proof-card">
+                    <div class="proof-number">480M</div>
+                    <div class="proof-label">Total Tour Engagements</div>
+                    <div class="proof-detail">Including 42 Home Depot locations and hundreds of residential properties</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section class="examples-section" id="examples">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Experience It Yourself</h2>
+                <p class="section-subtitle">Interact with professional 3D tours. Notice how you naturally explore.</p>
+            </div>
+            
+            <div class="tour-showcase">
+                <div class="tour-tabs">
+                    <button class="tour-tab active" onclick="switchTour(0)">
+                        <span class="tab-label">Residential Property</span>
+                        <span class="tab-tech">Matterport Pro3</span>
+                    </button>
+                    <button class="tour-tab" onclick="switchTour(1)">
+                        <span class="tab-label">Commercial Space</span>
+                        <span class="tab-tech">Matterport Pro2</span>
+                    </button>
+                </div>
+                
+                <div class="tour-viewer">
+                    <div class="tour-frame active" id="tour0">
+                        <iframe 
+                            src="https://my.matterport.com/show/?m=hcRncjBv4Bk" 
+                            frameborder="0" 
+                            allowfullscreen 
+                            allow="xr-spatial-tracking">
+                        </iframe>
+                    </div>
+                    <div class="tour-frame" id="tour1">
+                        <iframe 
+                            src="https://my.matterport.com/show/?m=RxngoitdYTR" 
+                            frameborder="0" 
+                            allowfullscreen 
+                            allow="xr-spatial-tracking">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <div class="tour-insight">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text">
+                        <strong>Notice what just happened:</strong> You didn't just look at this property. 
+                        You <em>explored</em> it. That's mental ownership happening in real-time.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intelligence Section -->
+    <section class="intelligence-section" id="intelligence">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What AI Sees That You Don't</h2>
+                <p class="section-subtitle">Traditional marketing guesses. AI knows.</p>
+            </div>
+            
+            <div class="intelligence-grid">
+                <div class="intel-card">
+                    <div class="intel-number">01</div>
+                    <h3 class="intel-title">Engagement Patterns</h3>
+                    <p class="intel-description">
+                        AI tracks exactly where buyers spend time. If everyone's spending 40% of their 
+                        session in your kitchen, that's not a coincidence—that's your hero feature.
+                    </p>
+                </div>
+                
+                <div class="intel-card">
+                    <div class="intel-number">02</div>
+                    <h3 class="intel-title">Navigation Flow</h3>
+                    <p class="intel-description">
+                        Which rooms do buyers visit first? Which do they return to? Movement patterns 
+                        reveal priorities your static photos never could.
+                    </p>
+                </div>
+                
+                <div class="intel-card">
+                    <div class="intel-number">03</div>
+                    <h3 class="intel-title">Session Duration</h3>
+                    <p class="intel-description">
+                        Time spent = genuine interest. AI identifies qualified leads based on engagement 
+                        depth, not just page views.
+                    </p>
+                </div>
+                
+                <div class="intel-card">
+                    <div class="intel-number">04</div>
+                    <h3 class="intel-title">Content Generation</h3>
+                    <p class="intel-description">
+                        AI extracts room data, dimensions, features from the tour itself and writes 
+                        marketing copy that emphasizes what actually converts.
+                    </p>
+                </div>
+                
+                <div class="intel-card">
+                    <div class="intel-number">05</div>
+                    <h3 class="intel-title">Predictive Matching</h3>
+                    <p class="intel-description">
+                        "Buyers who engaged with this space also loved..." AI finds patterns across 
+                        thousands of tours to predict what matters.
+                    </p>
+                </div>
+                
+                <div class="intel-card">
+                    <div class="intel-number">06</div>
+                    <h3 class="intel-title">Real-Time Optimization</h3>
+                    <p class="intel-description">
+                        Tours go live. AI monitors. Marketing adjusts automatically based on what's 
+                        working, not what you hoped would work.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to See Your Tours Through AI?</h2>
+                <p class="cta-description">
+                    Paste any 3D tour link above for instant analysis. Or if you need tours that convert even harder, 
+                    we can help with that too.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#analyze" class="cta-primary">Analyze My Tour</a>
+                    <a href="https://realtypix360.com" class="cta-secondary" target="_blank">
+                        Professional 3D Scanning →
+                    </a>
+                </div>
+                <div class="cta-credit">
+                    Powered by <strong>RealtyPix360</strong> — Buffalo & Western NY's premier 3D documentation specialists
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand"><span class="brand-accent">//</span> Try3DTours</div>
+                    <p class="footer-tagline">AI-powered intelligence for property marketing</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Platform</h4>
+                        <a href="#analyze" class="footer-link">Tour Analysis</a>
+                        <a href="#proof" class="footer-link">Data & Proof</a>
+                        <a href="#examples" class="footer-link">Examples</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Services</h4>
+                        <a href="https://realtypix360.com" class="footer-link" target="_blank">RealtyPix360</a>
+                        <a href="https://getmyvr.com" class="footer-link" target="_blank">GetMyVR</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Coverage</h4>
+                        <div class="footer-text">Buffalo, NY</div>
+                        <div class="footer-text">Western New York</div>
+                        <div class="footer-text">Commercial nationwide</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">© 2026 Try3DTours. Intelligence-driven property marketing.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
