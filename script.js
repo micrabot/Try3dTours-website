@@ -49,70 +49,20 @@ async function analyzeTour() {
     document.getElementById('generatedCopy').innerHTML = '<div class="loading-shimmer"></div>';
     
     try {
-        // Call Claude API for AI-powered analysis
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
+        // Call our serverless function instead of Claude API directly
+        const response = await fetch('/api/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 1000,
-                messages: [{
-                    role: 'user',
-                    content: `You are an AI analyzing 3D property tours to provide marketing intelligence. 
-
-Given this 3D tour URL: ${url}
-
-Based on the platform (${url.includes('matterport') ? 'Matterport' : url.includes('zillow') ? 'Zillow 3D Home' : 'iGUIDE'}), provide:
-
-1. A realistic engagement score (1-100) with brief insight
-2. Most likely high-converting space (kitchen/master bedroom/living/outdoor/etc) with why
-3. Estimated average tour duration (in minutes:seconds format) with insight
-4. Primary marketing angle to emphasize based on typical engagement patterns
-5. A compelling 3-4 sentence property marketing description that emphasizes engagement-driven selling points
-
-Return ONLY valid JSON in this exact format with no markdown formatting:
-{
-  "engagementScore": "85",
-  "engagementInsight": "Above average - indicates strong property appeal",
-  "topSpace": "Kitchen",
-  "spaceInsight": "Modern kitchens drive 40% higher engagement",
-  "avgDuration": "4:23",
-  "durationInsight": "Extended viewing suggests serious buyer interest",
-  "marketingAngle": "Lifestyle & Entertaining",
-  "angleInsight": "Focus on social spaces and flow",
-  "marketingCopy": "Your compelling marketing description here..."
-}`
-                }]
-            })
+            body: JSON.stringify({ url })
         });
         
         if (!response.ok) {
             throw new Error('Analysis request failed');
         }
         
-        const data = await response.json();
-        
-        // Extract the text content
-        let aiText = '';
-        if (data.content && Array.isArray(data.content)) {
-            aiText = data.content
-                .filter(item => item.type === 'text')
-                .map(item => item.text)
-                .join('\n');
-        }
-        
-        // Parse the JSON response
-        let analysis;
-        try {
-            // Remove any markdown code fences if present
-            const cleanedText = aiText.replace(/```json\n?|\n?```/g, '').trim();
-            analysis = JSON.parse(cleanedText);
-        } catch (parseError) {
-            console.error('JSON parse error:', parseError);
-            throw new Error('Invalid response format from AI');
-        }
+        const analysis = await response.json();
         
         // Animate in the results
         setTimeout(() => {
