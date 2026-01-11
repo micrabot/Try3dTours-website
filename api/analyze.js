@@ -1,4 +1,3 @@
-// Vercel Serverless Function - Analyze 3D Tour
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -37,46 +36,45 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        max_tokens: 1500,
         messages: [{
           role: 'user',
           content: `You are an AI analyzing 3D property tours to provide marketing intelligence. 
 
+CRITICAL: Generate UNIQUE and VARIED analysis for each URL. Never repeat the same numbers or descriptions.
+
 Given this 3D tour URL: ${url}
 
-Based on the platform (${url.includes('matterport') ? 'Matterport' : url.includes('zillow') ? 'Zillow 3D Home' : 'iGUIDE'}), generate UNIQUE and VARIED analysis.
+Platform: ${url.includes('matterport') ? 'Matterport' : url.includes('zillow') ? 'Zillow 3D Home' : 'iGUIDE'}
 
-IMPORTANT: Make each analysis different by varying:
-- Engagement scores between 65-95
-- Different top converting spaces based on URL patterns
-- Varied durations between 2:30 and 5:45
-- Different marketing angles
-- Unique property descriptions
+Generate analysis with RANDOMIZED values:
+1. Engagement score between 62-94 (vary widely)
+2. Different top converting spaces each time (kitchen, master bedroom, living room, outdoor space, bathroom, entryway, dining room, basement, office, etc.)
+3. Tour duration between 2:15 and 6:30 (vary significantly)
+4. Unique marketing angles (Modern Lifestyle, Family Living, Entertainer's Dream, Urban Luxury, Cozy Retreat, Investment Opportunity, etc.)
+5. Completely original 3-4 sentence property description
 
-Provide:
-1. A realistic engagement score (65-95) with brief insight
-2. Most likely high-converting space (kitchen/master bedroom/living/outdoor/bathroom/entry/etc) with why
-3. Estimated average tour duration (in minutes:seconds format) with insight
-4. Primary marketing angle to emphasize based on typical engagement patterns
-5. A compelling 3-4 sentence property marketing description that emphasizes engagement-driven selling points
+Make each response feel authentic and different. Use the URL itself to inform variations.
 
-Return ONLY valid JSON in this exact format with no markdown formatting:
+Return ONLY valid JSON with no markdown:
 {
-  "engagementScore": "85",
-  "engagementInsight": "Above average - indicates strong property appeal",
-  "topSpace": "Kitchen",
-  "spaceInsight": "Modern kitchens drive 40% higher engagement",
-  "avgDuration": "4:23",
-  "durationInsight": "Extended viewing suggests serious buyer interest",
-  "marketingAngle": "Lifestyle & Entertaining",
-  "angleInsight": "Focus on social spaces and flow",
-  "marketingCopy": "Your compelling marketing description here..."
+  "engagementScore": "XX",
+  "engagementInsight": "unique insight here",
+  "topSpace": "specific room",
+  "spaceInsight": "why this space matters",
+  "avgDuration": "X:XX",
+  "durationInsight": "what this duration means",
+  "marketingAngle": "unique angle",
+  "angleInsight": "brief explanation",
+  "marketingCopy": "Original compelling 3-4 sentence description"
 }`
         }]
       })
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Claude API error:', response.status, errorText);
       throw new Error(`Claude API error: ${response.status}`);
     }
 
